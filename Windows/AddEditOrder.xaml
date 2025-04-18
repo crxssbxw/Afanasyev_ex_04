@@ -1,0 +1,79 @@
+﻿<Window x:Class="Pizza.Windows.AddEditOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pizza.Windows"
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="{Binding TitleMode}" Height="550" Width="400">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel x:Name="Header" Background="#F4E8D3">
+            <Image Source="/Resources/пицца.png" MaxHeight="50" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding TitleMode}" FontSize="18" FontWeight="Bold" Margin="10" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </DockPanel>
+
+        <ScrollViewer Grid.Row="1" Margin="0 5">
+            <StackPanel>
+                <GroupBox Header="Клиент">
+                    <StackPanel>
+                        <Label Content="Фамилия"/>
+                        <TextBox Text="{Binding Client.SecondName}"/>
+                        <Label Content="Имя"/>
+                        <TextBox Text="{Binding Client.FirstName}"/>
+                        <Label Content="Отчество"/>
+                        <TextBox Text="{Binding Client.MiddleName}"/>
+
+                        <Label Content="Телефон"/>
+                        <TextBox Text="{Binding Client.Phone}" MaxLength="11"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Адрес">
+                    <StackPanel>
+                        <Label Content="Улица"/>
+                        <TextBox Text="{Binding Order.AdressStreet}"/>
+                        <Label Content="Дом"/>
+                        <TextBox Text="{Binding Order.AdressHouse}"/>
+                        <Label Content="Квартира / Офис"/>
+                        <TextBox Text="{Binding Order.AdressApartment}"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Пицца">
+                    <StackPanel>
+                        <Label Content="Пицца"/>
+                        <ComboBox SelectedValue="{Binding PizzaAssortiment, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PizzaAssortiments}">
+                        </ComboBox>
+
+                        <Label Content="Количество"/>
+                        <TextBox Text="{Binding PizzaCount, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <TextBlock Text="Итого:"/>
+                <TextBlock Text="{Binding OrderCost, StringFormat=Без скидки {0:N2} руб}"/>
+                <TextBlock Text="{Binding Discount, StringFormat=скидка {0}%}"/>
+                <TextBlock Text="{Binding CountFinalCost, StringFormat=Итог: {0:N2} руб}"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <DockPanel Grid.Row="2" HorizontalAlignment="Center">
+            <DockPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#67BA80"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                    <Setter Property="Padding" Value="10 2"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </DockPanel.Resources>
+
+            <Button Content="Принять" Margin="5" x:Name="AcceptBT" IsDefault="True" Click="AcceptBT_Click"/>
+            <Button Content="Отмена" Margin="5" x:Name="CancelBT" IsCancel="True" Click="CancelBT_Click"/>
+        </DockPanel>
+    </Grid>
+</Window>
